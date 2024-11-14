@@ -44,3 +44,11 @@ git add .
 git push
 git restore -- .cz.json CHANGELOG.md
 ```
+
+
+
+##### Запускать by Egor
+
+npx tsc
+npm install
+node ./dist/index.js
