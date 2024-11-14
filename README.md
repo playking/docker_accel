@@ -49,6 +49,8 @@ git restore -- .cz.json CHANGELOG.md
 
 ##### Запускать by Egor
 
+```console
 npx tsc
 npm install
 node ./dist/index.js
+```
