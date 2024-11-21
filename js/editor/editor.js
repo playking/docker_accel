@@ -30,7 +30,7 @@ export function setEditorValue(new_text) {
 
 
 
-require.config({ paths: { vs: './node_modules/monaco-editor/min/vs' } });
+require.config({ paths: { vs: '../../node_modules/monaco-editor/min/vs' } });
 require(['vs/editor/editor.main'], function () {
     (async () => {
         let {editorId = null} = loadFromHash();
@@ -45,19 +45,25 @@ require(['vs/editor/editor.main'], function () {
         const provider = new WebsocketProvider(`${wsApiUrl}/editor/ws`, editor.id, ydocument);
         const type = ydocument.getText('monaco');
 
-        editor.current = monaco.editor.create(document.querySelector('#container'), {//
-            // automaticLayout: true,
-            value: ``,//
-            language: 'cpp'//
-        });//
-        
-        editor.current.layout();   // 
+        console.log("Создание Monaco Editor...");
+        editor.current = monaco.editor.create(document.getElementById('container'), {
+            language: 'cpp',
+            insertSpaces: false,
+            readOnly: typeof read_only !== 'undefined' ? read_only : false,
+            unicodeHighlight: { ambiguousCharacters: false },
+            value: `// Это пример C++ кода
+#include <iostream>
+using namespace std;
 
-        const monacoBinding = new MonacoBinding(type, editor.current.getModel(), new Set([editor.current]), provider.awareness);
-        provider.connect();
-
-    })();    
-});
+int main() {
+    cout << "Hello, World!" << endl;
+    return 0;
+}`,
+            minimap: { enabled: false }
+        });
+        console.log("Monaco Editor создан:", editor.current);
+            })();    
+        });
 
 
 
