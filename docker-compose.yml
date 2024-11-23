@@ -25,15 +25,19 @@ services:
       - app-network
 
 
-  # node:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.node
-  #   ports:
-  #     - 3000:3000
-  #   volumes:
-  #     - .:/app
-  #     - /var/run/docker.sock:/var/run/docker.sock
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - app-network
+    extra_hosts:
+      - "vector:127.0.0.1"
 
   psql:
     build:
