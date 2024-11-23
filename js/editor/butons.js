@@ -1,6 +1,6 @@
 import * as Editor from "./editor.js";
 import apiUrl from "../api.js";
-import Sandbox from "../../src/js/sandbox.js";
+import Sandbox from "../sandbox.js";
 import * as FileHandler from "../FileHandler.js";
 
 export { makeRequest, saveEditedFile, saveActiveFile, openFile };

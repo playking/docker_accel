@@ -1,4 +1,4 @@
-// export default `https://vega.mirea.ru/sandbox`;
+export default `http://localhost`;
 
 export const basePath = `/sandbox`;
 export const host = window.location.host;

@@ -2,9 +2,11 @@ import editor from "./editor.js";
 import { makeRequest, saveEditedFile, saveActiveFile, openFile, getActiveFileName } from "./butons.js";
 import { getCMDCompilationCommand, getFileExt } from "../FileHandler.js";
 import apiUrl from "../api.js";
-import Sandbox from "../../src/js/sandbox.js";
+import Sandbox from "../sandbox.js";
 //import alertify from "./alertifyjs/alertify.js";
 //запуск в консоли. 
+
+const httpApiUrl = 'http://localhost';
 
 function saveAll() {
     var param = document.location.href.split("?")[1].split("#")[0];
@@ -64,7 +66,10 @@ document.querySelector("#run").addEventListener('click', async e => {
 
     //if(t){
     //var resp = await (await fetch(`${apiUrl}/sandbox/${Sandbox.id}/cmd`, {method: "POST", body: JSON.stringify({cmd: "make -f "+items[t].value}), headers: {'Content-Type': 'application/json'}})).json();
-    var resp = await (await fetch(`${apiUrl}/sandbox/${Sandbox.id}/cmd`, { method: "POST", body: JSON.stringify({ cmd: cmdCommand + " " }), headers: { 'Content-Type': 'application/json' } })).json();
+    
+    var resp = await (await fetch(`${httpApiUrl}/sandbox/${Sandbox.id}/cmd`, {method: "POST", body: JSON.stringify({cmd: "make "}), headers: {'Content-Type': 'application/json'}})).json();
+    
+    //var resp = await (await fetch(`${httpApiUrl}/sandbox/${Sandbox.id}/cmd/${user}`, { method: "POST", body: JSON.stringify({ cmd: cmdCommand + " " }), headers: { 'Content-Type': 'application/json' } })).json();
     //}
     //alert(resp['stdout']+",\n"+resp['stderr']+",\n"+resp['exitCode']);
     //alert(t);

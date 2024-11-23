@@ -51,14 +51,7 @@ require(['vs/editor/editor.main'], function () {
             insertSpaces: false,
             readOnly: typeof read_only !== 'undefined' ? read_only : false,
             unicodeHighlight: { ambiguousCharacters: false },
-            value: `// Это пример C++ кода
-#include <iostream>
-using namespace std;
-
-int main() {
-    cout << "Hello, World!" << endl;
-    return 0;
-}`,
+            value: ` `,
             minimap: { enabled: false }
         });
         console.log("Monaco Editor создан:", editor.current);
