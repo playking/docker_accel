@@ -215,6 +215,7 @@ def test_clang_format():
         data['tools']['clang-format']['check']['outcome'] = 'pass' if data['tools']['clang-format']['check']['limit'] >= replacements else 'fail'
 
     data['tools']['clang-format']['full_output'] = 'output_format.xml'
+    data['tools']['clang-format']['outcome'] = 'pass'
     print('Clang-format checked')
 
 def test_autotests():

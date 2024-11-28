@@ -21,6 +21,13 @@ RUN useradd -M -d /sandbox sandbox
 RUN chown -R sandbox:sandbox /sandbox
 WORKDIR /sandbox
 
+# # Создаём директорию /stable
+# RUN mkdir -p /stable
+
+# # Копируем файл .clang-format из директории stable в контейнер
+# COPY ./codecheck/examples/.clang-format /stable/.clang-format
+
+
 RUN mkdir -p /opt/nitori/__unit_test/
 COPY ./shared/* /opt/nitori/
 COPY ./shared/__unit_test/* /opt/nitori/__unit_test/
