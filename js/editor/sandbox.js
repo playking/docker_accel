@@ -1,12 +1,10 @@
 import editor from "./editor.js";
 import { makeRequest, saveEditedFile, saveActiveFile, openFile, getActiveFileName } from "./butons.js";
 import { getCMDCompilationCommand, getFileExt } from "../FileHandler.js";
-import apiUrl from "../api.js";
+import httpApiUrl from "../api.js";
 import Sandbox from "../sandbox.js";
 //import alertify from "./alertifyjs/alertify.js";
 //запуск в консоли. 
-
-const httpApiUrl = 'http://localhost';
 
 function saveAll() {
     var param = document.location.href.split("?")[1].split("#")[0];
@@ -41,7 +39,7 @@ function getProjectCompilationCommandThroughProjectFiles(file_names) {
 
 document.querySelector("#run").addEventListener('click', async e => {
     saveActiveFile();
-    saveAll();
+    //saveAll();
     var param = document.location.href.split("?")[1].split("#")[0];
     if (param == '') param = 'void';
     var list = document.getElementsByClassName("tasks__list")[0];

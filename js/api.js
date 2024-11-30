@@ -1,4 +1,8 @@
-export default `http://localhost`;
+
+// for docker
+export default `http://localhost:8080`;
+
+// export default `http://localhost`;
 
 export const basePath = `/sandbox`;
 export const host = window.location.host;

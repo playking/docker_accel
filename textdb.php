@@ -428,7 +428,7 @@ else if ($type == "tools") {
   $checks = $row['achecks'];
   if ($checks == null)
     $checks = $row['tchecks'];
-  if ($checks == null)
+  if (true)
     $checks = '{
   "tools": {
     "build": {
@@ -444,7 +444,7 @@ else if ($type == "tools") {
       "show_to_student": false,
       "bin": "valgrind",
       "arguments": "",
-      "compiler": "gcc",
+      "compiler": "g++",
       "checks": [
         {
           "check": "errors",
@@ -681,7 +681,7 @@ else if ($type == "tools") {
   /*echo $checks; exit;*/
 
   $sid = session_id();
-  $folder = "/var/app/share/" . (($sid == false) ? "unknown" : $sid);
+  $folder = "/var/www/html/share/" . (($sid == false) ? "unknown" : $sid);
   if (!file_exists($folder))
     mkdir($folder, 0777, true);
 
@@ -699,7 +699,7 @@ else if ($type == "tools") {
   }
   $checks = json_encode($checks);
 
-  $myfile = fopen($folder . '/config.json', "w") or die("Невозможно открыть файл конфигурации!");
+  $myfile = fopen($folder . '/config.json', "w") or die("Невозможно открыть файл конфи111111111гурации!");
   fwrite($myfile, $checks);
   fclose($myfile);
 
@@ -915,14 +915,18 @@ else if ($type == "tools") {
   // chdir($folder);
   // exec("python -m python_code_check -c config.json " . implode(' ', $files) . ' 2>&1', $output, $retval);
 
+  $folder_for_docker = getenv('HOST_DIR');
+  if ($hostScriptDir === false) {
+      die('Переменная HOST_DIR не задана');
+  }
 
   $checks = json_decode($checks, true);
   if ((isset($checks['tools']['pylint']) && $checks['tools']['pylint']['enabled'])
     || (isset($checks['tools']['pytest']) && $checks['tools']['pytest']['enabled'])
   )
-    exec('docker run --net=host --rm -v ' . $folder . ':/tmp -v /var/app/utility:/stable -w=/tmp nitori_sandbox python_code_check -c config.json ' . implode(' ', $files) . ' 2>&1', $output, $retval);
+    exec('docker run --net=host --rm -v ' . $folder_for_docker . '/share/' . $sid . ':/tmp -v ' . $folder_for_docker . '/utility:/stable -w=/tmp nitori_sandbox python_code_check -c config.json ' . implode(' ', $files) . ' 2>&1', $output, $retval);
   else
-    exec('docker run --net=host --rm -v ' . $folder . ':/tmp -v /var/app/utility:/stable -w=/tmp nitori_sandbox codecheck -c config.json ' . implode(' ', $files) . ' 2>&1', $output, $retval);
+    exec('docker run --net=host --rm -v ' . $folder_for_docker . '/share/' . $sid . ':/tmp -v ' . $folder_for_docker . '/utility:/stable -w=/tmp nitori_sandbox codecheck -c config.json ' . implode(' ', $files) . ' 2>&1', $output, $retval);
 
   //$responce = 'docker run -it --net=host --rm -v '.$folder.':/tmp nitori_sandbox codecheck -c config.json -i'.$commit_id.' '.implode(' ', $files);
   //exec('docker run -it --net=host --rm -v '.$folder.':/tmp -w=/tmp nitori_sandbox codecheck -c config.json -i '.$commit_id.' '.implode(' ', $files), $output, $retval);
@@ -963,7 +967,7 @@ else if ($type == "tools") {
 
   pg_query($dbconnect, 'update ax.ax_solution_commit set autotest_results = $accelquotes$' . $responce . '$accelquotes$ where id = ' . $Commit->id);
   /**/
-
+  
   header('Content-Type: application/json');
 }
 
@@ -977,7 +981,7 @@ else if ($type == "console") {
   }
   $tool =  $_REQUEST['tool'];
 
-  $folder = "/var/app/share/" . (($sid == false) ? "unknown" : $sid);
+  $folder = "/var/www/html/share/" . (($sid == false) ? "unknown" : $sid);
   if (!file_exists($folder)) {
     echo "Перезапустите проверку!";
     http_response_code(200);

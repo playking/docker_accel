@@ -3,3 +3,4 @@ dist/
 js/dist/
 dbparams.php
 env.php
+share/

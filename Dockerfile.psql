@@ -1,16 +1,8 @@
-# Используем официальный образ PostgreSQL версии 16
 FROM postgres:16
 
-# Устанавливаем переменные окружения для PostgreSQL
 ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=7136644
 
-# Копируем файл дампа и скрипт запуска в контейнер
-COPY qwerty.dump /qwerty.dump
-COPY init.sh /docker-entrypoint-initdb.d/init.sh
+COPY ./for_docker/qwerty.dump /qwerty.dump
 
-# Делаем скрипт исполнимым
-RUN chmod +x /docker-entrypoint-initdb.d/init.sh
-
-# Expose для PostgreSQL
 EXPOSE 5432
