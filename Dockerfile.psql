@@ -4,5 +4,8 @@ ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=7136644
 
 COPY ./for_docker/qwerty.dump /qwerty.dump
+COPY ./for_docker/init.sh /docker-entrypoint-initdb.d/init.sh
+
+RUN chmod +x /docker-entrypoint-initdb.d/init.sh
 
 EXPOSE 5432

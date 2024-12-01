@@ -1,9 +1,10 @@
 #!/bin/bash
+set -e 
 
-docker exec -it accel_psql_1 psql -U postgres -c "CREATE DATABASE vega_test_bd;"
-docker exec -it accel_psql_1 psql -U postgres -c "CREATE DATABASE accelerator;"
+psql -U postgres -c "CREATE DATABASE vega_test_bd;"
+psql -U postgres -c "CREATE DATABASE accelerator;"
 
 
-docker exec -it accel_psql_1 psql -U postgres -f /qwerty.dump
+psql -U postgres -f /qwerty.dump
 
 echo "Databases created and dump restored!"
