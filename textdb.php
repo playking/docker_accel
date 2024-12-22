@@ -428,7 +428,7 @@ else if ($type == "tools") {
   $checks = $row['achecks'];
   if ($checks == null)
     $checks = $row['tchecks'];
-  if (true)
+  if ($checks == null)
     $checks = '{
   "tools": {
     "build": {
@@ -693,13 +693,13 @@ else if ($type == "tools") {
   else if (array_key_exists('autotests', $checks['tools'])) {
     $checks["tools"]["autotests"]["test_path"] = $result["file_name"];
     @unlink($folder . '/' . $result['file_name']);
-    $myfile = fopen($folder . '/' . $result['file_name'], "w") or die("Невозможно открыть файл ($File->name) кода теста!");
+    $myfile = fopen($folder . '/' . 'autotest.cpp', "w") or die("Невозможно открыть файл ($File->name) кода теста!");
     fwrite($myfile, $result['full_text']);
     fclose($myfile);
   }
   $checks = json_encode($checks);
 
-  $myfile = fopen($folder . '/config.json', "w") or die("Невозможно открыть файл конфи111111111гурации!");
+  $myfile = fopen($folder . '/config.json', "w") or die("Невозможно открыть файл конфигурации!");
   fwrite($myfile, $checks);
   fclose($myfile);
 
@@ -734,19 +734,19 @@ else if ($type == "tools") {
     exit;
   }
 
-  $files_codeTest = array();
-  $Task = new Task((int)getTaskByAssignment((int)$assignment));
-  foreach ($Task->getCodeTestFiles() as $File) {
-    $myfile = fopen($folder . '/' . "autotest." . $File->getExt(), "w");
-    if (!$myfile) {
-      echo "Невозможно открыть файл ($File->name) автотеста!";
-      http_response_code(500);
-      exit;
-    }
-    fwrite($myfile, $File->getFullText());
-    fclose($myfile);
-    array_push($files_codeTest, "autotest." . $File->getExt());
-  }
+  // $files_codeTest = array();
+  // $Task = new Task((int)getTaskByAssignment((int)$assignment));
+  // foreach ($Task->getCodeTestFiles() as $File) {
+  //   $myfile = fopen($folder . '/' . "autotest." . $File->getExt(), "w");
+  //   if (!$myfile) {
+  //     echo "Невозможно открыть файл ($File->name) автотеста!";
+  //     http_response_code(500);
+  //     exit;
+  //   }
+  //   fwrite($myfile, $File->getFullText());
+  //   fclose($myfile);
+  //   array_push($files_codeTest, "autotest." . $File->getExt());
+  // }
 
   // if (count($files_codeTest) < 1) {
   //   echo "Не найдены файлы теста!" . $Task->id;
@@ -955,6 +955,7 @@ else if ($type == "tools") {
     http_response_code(500);
     exit;
   }
+  
   $myfile = fopen($folder . '/output.json', "r");
   if (!$myfile) {
     echo "Не удалось получить результаты проверки из файла:<br>";

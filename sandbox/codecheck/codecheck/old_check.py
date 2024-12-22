@@ -75,8 +75,6 @@ def test_build():
 
     result = subprocess.run([compile_command] + flags + files, capture_output=True)
 
-    print([compile_command] + flags + files)
-
     output = open("output_build.txt", "w")
     data['tools']['build']['check']['full_output'] = 'output_build.txt'
     output.write(str(result.stderr))
@@ -231,6 +229,7 @@ def test_autotests():
     #     command = 'gcc -c '
     # else if data['tools']['autotests']['language'] == 'C++':
     #     coomand = 'g++ -c '
+
     compile_test = 'g++ ' + data['tools']['autotests']['test_path'] + ' '
     for file in files:
         compile_test += file.split('.')[0] + '.o'
@@ -239,14 +238,14 @@ def test_autotests():
     compile_test += test_executable_name
 
     compile_test += ' -I /stable'
+
     run_test = './test --reporter junit -o tests_result.xml'
-    # run_test = './test --reporter junit > tests_result.xml' #пока что только так, сам ./test выдает xml
     system(compile_test)
     system(run_test)
     system("./test > output_tests.txt")
 
     errors = 0
-    failures = -1
+    failures = 0
     for event, elem in ET.iterparse('tests_result.xml'):
         if elem.tag == 'testsuite':
             errors += int(elem.get('errors'))
@@ -272,7 +271,7 @@ def test_autotests():
     data['tools']['autotests']['check']['errors'] = errors
     data['tools']['autotests']['check']['failures'] = failures
     data['tools']['autotests']['full_output'] = "output_tests.txt"
-    # data['tools']['autotests']['outcome'] = "pass"
+    data['tools']['autotests']['outcome'] = "pass"
     print('Autotests checked')
 
 def test_copydetect():

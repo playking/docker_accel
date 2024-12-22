@@ -612,7 +612,7 @@ show_head($page_title, array('https://cdn.jsdelivr.net/npm/marked/marked.min.js'
               "check": {
                 "limit": 0,
                 "autoreject": true,
-                "outcome": "fail",
+                "outcome": "skip",
                 "errors": 0,
                 "failures": 3
               },
@@ -647,7 +647,6 @@ show_head($page_title, array('https://cdn.jsdelivr.net/npm/marked/marked.min.js'
                 $checks = json_decode($checks, true);
 
                 echo "<script>var CONFIG_TOOLS=" . json_encode($checks) . ";</script>";
-
                 $accord = getAccordionToolsHtml($checks, @$checkres, $User);
                 echo show_accordion('checkres', $accord, "5px");
                 ?>
